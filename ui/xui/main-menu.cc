@@ -42,6 +42,8 @@
 
 #include "../thirdparty/fatx/fatx.h"
 
+#include "AchievementManager.hh"
+
 #define DEFAULT_XMU_SIZE 8388608
 
 MainMenuScene g_main_menu;
@@ -1669,6 +1671,42 @@ void MainMenuAboutView::Draw()
     ImGui::Text("for more information");
 }
 
+MainMenuAchievementsView::MainMenuAchievementsView() {}
+
+void MainMenuAchievementsView::Draw(){
+    SectionTitle("Settings");
+    Toggle("Enable RetroAchievements Integration", &g_config.rcheevos.enable_ra, 
+        "Enable RetroAchievements integration. (requires restart)");
+    
+    ImGui::PushFont(g_font_mgr.m_menu_font_small);
+    if(ImGui::InputTextWithHint("##ra_username", "Enter username...",
+                             &m_ra_username)){
+                                g_config.rcheevos.username = m_ra_username.c_str();
+                             }
+    ImGui::InputTextWithHint("##ra_password", "Enter password...",
+                             &m_ra_password);
+    ImGui::PopFont();
+
+    if(ImGui::Button("Log In", ImVec2(-FLT_MIN, 0))){
+        AchievementManager::GetInstance().Login(m_ra_password);
+    }
+    
+    SectionTitle("Function Settings");
+    Toggle("Enable Hardcore Mode", &g_config.rcheevos.ra_function.enable_hardcore_mode, 
+        "Hardcore Mode simulates playing on real hardware. Disables loading snapshots (creating snapshots is allowed)");
+    Toggle("Enable Unofficial Achievements", &g_config.rcheevos.ra_function.enable_unofficial_achievements, 
+        "Enable unlocking unofficial achievements.");
+    Toggle("Enable Encore Achievements", &g_config.rcheevos.ra_function.enable_encore_achievements, 
+        "Re-enables previously earned achievements.");
+    
+    SectionTitle("Display Settings");
+    Toggle("Show Leaderboard Tracker", &g_config.rcheevos.ra_display.show_leaderboard, 
+        "Show the on-screen RetroAchievements leaderboard tracker.");
+    Toggle("Show Challenge Indicators", &g_config.rcheevos.ra_display.show_challenge, 
+        "Show the on-screen RetroAchievements challenge indicators.");
+        
+}
+
 MainMenuTabButton::MainMenuTabButton(std::string text, std::string icon)
     : m_icon(icon), m_text(text)
 {
@@ -1712,6 +1750,7 @@ MainMenuScene::MainMenuScene()
       m_network_button("Network", ICON_FA_NETWORK_WIRED),
       m_snapshots_button("Snapshots", ICON_FA_CLOCK_ROTATE_LEFT),
       m_system_button("System", ICON_FA_MICROCHIP),
+      m_achievements_button("Achievements", ICON_FA_A),
       m_about_button("About", ICON_FA_CIRCLE_INFO)
 {
     m_had_focus_last_frame = false;
@@ -1723,6 +1762,7 @@ MainMenuScene::MainMenuScene()
     m_tabs.push_back(&m_network_button);
     m_tabs.push_back(&m_snapshots_button);
     m_tabs.push_back(&m_system_button);
+    m_tabs.push_back(&m_achievements_button);
     m_tabs.push_back(&m_about_button);
 
     m_views.push_back(&m_general_view);
@@ -1732,6 +1772,7 @@ MainMenuScene::MainMenuScene()
     m_views.push_back(&m_network_view);
     m_views.push_back(&m_snapshots_view);
     m_views.push_back(&m_system_view);
+    m_views.push_back(&m_achievements_view);
     m_views.push_back(&m_about_view);
 
     m_current_view_index = 0;

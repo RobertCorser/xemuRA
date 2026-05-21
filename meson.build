@@ -1,5 +1,5 @@
 project('qemu', ['c', 'cpp'], meson_version: '>=1.5.0',
-        default_options: ['warning_level=1', 'c_std=gnu11', 'cpp_std=c++17', 'b_colorout=auto',
+        default_options: ['warning_level=1', 'c_std=gnu11', 'cpp_std=c++23', 'b_colorout=auto',
                           'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true'],
         version: files('QEMU_VERSION'))
 
@@ -3683,6 +3683,33 @@ if have_libvduse
   libvduse = libvduse_proj.get_variable('libvduse_dep')
 endif
 
+rcheevos_dep = not_found
+# This tells meson to look into subprojects/rcheevos and evaluate its meson.build
+rcheevos_proj = subproject('rcheevos', required: true)
+if rcheevos_proj.found()
+  rcheevos_dep = rcheevos_proj.get_variable('rcheevos_dep')
+  config_host_data.set('CONFIG_RETROACHIEVEMENTS', true)
+endif
+
+#fmt_dep = not_found
+# This tells meson to look into subprojects/rcheevos and evaluate its meson.build
+#fmt_proj = subproject('fmt', required: true)
+#if fmt_proj.found()
+#  fmt_dep = fmt_proj.get_variable('fmt_dep')
+#  config_host_data.set('CONFIG_FMT', true)
+#endif
+
+fast_float_dep = not_found
+# This tells meson to look into subprojects/rcheevos and evaluate its meson.build
+fast_float_proj = subproject('fast_float', required: true)
+if fast_float_proj.found()
+  fast_float_dep = fast_float_proj.get_variable('fast_float_dep')
+  config_host_data.set('CONFIG_FAST_FLOAT', true)
+endif
+
+fmt = subproject('fmt', default_options: 'default_library=static')
+fmt_dep = fmt.get_variable('fmt_dep')
+
 tomlplusplus = dependency('tomlplusplus', fallback: ['tomlplusplus', 'tomlplusplus_dep'], default_options: ['default_library=static'])
 
 xxhash = dependency('libxxhash', fallback: ['xxhash', 'xxhash_dep'], default_options: ['default_library=static'])
@@ -3755,7 +3782,7 @@ qemu_version = custom_target('qemu-version.h',
 xemu_config = custom_target('xemu-config.h',
                             output: 'xemu-config.h',
                             input: [ files('config_spec.yml') ],
-                            command : [python, genconfig_proj.get_variable('gen_config_script_path'), '@INPUT@', '@OUTPUT@'],
+                            command : [python, genconfig_proj.get_variable('gen_config_script_path'), '@INPUT@', '@OUTPUT@']
                             )
 
 genh += qemu_version
@@ -3963,6 +3990,10 @@ if have_system
 else
   subdir('hw/core')
 endif
+
+# RetroAchievements
+subdir('common')
+subdir('achievements')
 
 if enable_modules
   libmodulecommon = static_library('module-common', files('module-common.c') + genh, pic: true, c_args: '-DBUILD_DSO')
@@ -4306,6 +4337,9 @@ common_ss.add(hwcore)
 ###########
 
 system_ss.add(authz, blockdev, chardev, crypto, io, qmp)
+
+system_ss.add(achievements_dep)
+
 common_ss.add(qom, qemuutil)
 
 libuser = static_library('user',

@@ -370,3 +370,17 @@ perf:
   cache_shaders:
     type: bool
     default: true
+
+rcheevos:
+  enable_ra: bool
+  username: string
+  api_token: string
+  ra_function:
+    enable_hardcore_mode:
+      type: bool
+      default: true
+    enable_unofficial_achievements: bool
+    enable_encore_achievements: bool
+  ra_display:
+    show_leaderboard: bool
+    show_challenge: bool

@@ -155,6 +155,16 @@ public:
     void Draw() override;
 };
 
+class MainMenuAchievementsView : public virtual MainMenuTabView
+{
+protected:
+    std::string m_ra_username;
+    std::string m_ra_password;
+public:
+    MainMenuAchievementsView();
+    void Draw() override;
+};
+
 class MainMenuTabButton
 {
 protected:
@@ -182,7 +192,8 @@ protected:
                                     m_network_button,
                                     m_snapshots_button,
                                     m_system_button,
-                                    m_about_button;
+                                    m_about_button,
+                                    m_achievements_button;
     std::vector<MainMenuTabView*>   m_views;
     MainMenuGeneralView             m_general_view;
     MainMenuInputView               m_input_view;
@@ -192,6 +203,7 @@ protected:
     MainMenuSnapshotsView           m_snapshots_view;
     MainMenuSystemView              m_system_view;
     MainMenuAboutView               m_about_view;
+    MainMenuAchievementsView        m_achievements_view;
 
 
 public:
