@@ -10,7 +10,7 @@
 #include <cstddef>
 #include <mutex>
 
-#include <curl/curl.h>
+#include "curl/curl.h"
 
 //#include "Common/Logging/Log.h"
 #include "common/ScopeGuard.hh"

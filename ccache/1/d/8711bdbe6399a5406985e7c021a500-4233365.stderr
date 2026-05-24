@@ -1,0 +1,8 @@
+../subprojects/rcheevos/src/rc_client_raintegration.c:66:107: warning: format specifies type 'unsigned int' but the argument has type 'DWORD' (aka 'unsigned long') [-Wformat]
+   66 |     int offset = snprintf(error_message, sizeof(error_message), "Failed to load RA_Integration.dll (%u)", last_error);
+      |                                                                                                     ~~    ^~~~~~~~~~
+      |                                                                                                     %lu
+../subprojects/rcheevos/src/rc_client_raintegration.c:73:77: warning: field precision should have type 'int', but argument has type 'DWORD' (aka 'unsigned long') [-Wformat]
+   73 |       snprintf(&error_message[offset], sizeof(error_message) - offset, ": %.*s", size, messageBuffer);
+      |                                                                           ~~^~   ~~~~
+2 warnings generated.

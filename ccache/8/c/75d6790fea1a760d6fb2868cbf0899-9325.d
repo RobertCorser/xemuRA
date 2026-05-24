@@ -1,0 +1,18 @@
+subprojects/rcheevos/librcheevos.a.p/src_rc_version.c.obj: \
+ ../subprojects/rcheevos/src/rc_version.c \
+ ../subprojects/rcheevos/src/rc_version.h \
+ ../subprojects/rcheevos/include/rc_export.h \
+ ../../opt/mxe/usr/x86_64-pc-linux-gnu/lib/clang/20/include/stdint.h \
+ ../../opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/stdint.h \
+ ../../opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/crtdefs.h \
+ ../../opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/corecrt.h \
+ ../../opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/_mingw.h \
+ ../../opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/_mingw_mac.h \
+ ../../opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/_mingw_secapi.h \
+ ../../opt/mxe/usr/x86_64-pc-linux-gnu/lib/clang/20/include/vadefs.h \
+ ../../opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/vadefs.h \
+ ../../opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h \
+ ../../opt/mxe/usr/x86_64-pc-linux-gnu/lib/clang/20/include/stddef.h \
+ ../../opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/stddef.h \
+ ../../opt/mxe/usr/x86_64-pc-linux-gnu/lib/clang/20/include/__stddef_wchar_t.h \
+ ../../opt/mxe/usr/x86_64-pc-linux-gnu/lib/clang/20/include/__stddef_wint_t.h

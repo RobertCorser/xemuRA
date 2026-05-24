@@ -20,6 +20,7 @@
 
 void ProcessKeyboardShortcuts(void);
 void ShowMainMenu();
+void* GetWindow(void);
 
 #ifdef CONFIG_RENDERDOC
 extern bool g_capture_renderdoc_frame;

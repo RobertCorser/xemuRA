@@ -1,0 +1,18 @@
+../io/dns-resolver.c:94:39: warning: format specifies type 'char *' but the argument has type 'WCHAR *' (aka 'unsigned short *') [-Wformat]
+   93 |         error_setg(errp, "address resolution failed for %s:%s: %s",
+      |                                                                ~~
+   94 |                    iaddr->host, port, gai_strerror(rc));
+      |                                       ^~~~~~~~~~~~~~~~
+/xemu/include/qapi/error.h:319:35: note: expanded from macro 'error_setg'
+  319 |                         (fmt), ## __VA_ARGS__)
+      |                          ~~~      ^~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/ws2tcpip.h:243:22: note: expanded from macro 'gai_strerror'
+  243 | #define gai_strerror __MINGW_NAME_AW(gai_strerror)
+      |                      ^
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/_mingw_unicode.h:12:32: note: expanded from macro '__MINGW_NAME_AW'
+   12 | # define __MINGW_NAME_AW(func) func##W
+      |                                ^
+<scratch space>:126:1: note: expanded from here
+  126 | gai_strerrorW
+      | ^
+1 warning generated.

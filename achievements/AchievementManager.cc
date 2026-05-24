@@ -14,7 +14,7 @@
 //#include "Common/BitUtils.h"
 //#include "Common/CommonPaths.h"
 //#include "Common/Config/Config.h"
-//#include "Common/FileUtil.h"
+#include "common/FileUtil.hh"
 
 //#include "Common/IOFile.h"
 //#include "Common/JsonUtil.h"
@@ -45,7 +45,7 @@
 
 #ifdef RC_CLIENT_SUPPORTS_RAINTEGRATION
 #include <libloaderapi.h>
-#include <rcheevos/include/rc_client_raintegration.h>
+#include "rc_client_raintegration.h"
 #include <shlwapi.h>
 #endif  // RC_CLIENT_SUPPORTS_RAINTEGRATION
 
@@ -61,7 +61,7 @@ AchievementManager& AchievementManager::GetInstance()
   return s_instance;
 }
 
-void AchievementManager::Init()
+void AchievementManager::Init(void* hwnd)
 {
   //LoadDefaultBadges();
   if (!m_client && g_config.rcheevos.enable_ra)
@@ -84,14 +84,13 @@ void AchievementManager::Init()
     rc_client_set_hardcore_enabled(m_client, 0);
     m_queue.Reset("AchievementManagerQueue");
     m_image_queue.Reset("AchievementManagerImageQueue");
-
 #ifdef RC_CLIENT_SUPPORTS_RAINTEGRATION
     // Attempt to load the integration DLL from the directory containing the main client executable.
     // In x64 build, will look for RA_Integration-x64.dll, then RA_Integration.dll.
     // In non-x64 build, will only look for RA_Integration.dll.
     rc_client_begin_load_raintegration(
         m_client, UTF8ToWString(File::GetExeDirectory()).c_str(), reinterpret_cast<HWND>(hwnd),
-        "Dolphin", Common::GetScmDescStr().c_str(), LoadIntegrationCallback, NULL);
+        "xemu", "0.8.134", LoadIntegrationCallback, NULL);
 #else   // RC_CLIENT_SUPPORTS_RAINTEGRATION
     //if (HasAPIToken())
     //  Login("");
@@ -1060,7 +1059,7 @@ void AchievementManager::LoginCallback(int result, const char* error_message, rc
   std::string config_username = g_config.rcheevos.username;
   if (config_username != user->username)
   {
-    fprintf(stdout, "Username alias %s -> %s.\n", config_username, user->username);
+    fprintf(stdout, "Username alias %s -> %s.\n", config_username.c_str(), user->username);
     g_config.rcheevos.username = user->username;
   }
   
@@ -1645,8 +1644,9 @@ void AchievementManager::EventHandler(const rc_client_event_t* event, rc_client_
 }
 */
 
-/*
+
 #ifdef RC_CLIENT_SUPPORTS_RAINTEGRATION
+
 void AchievementManager::LoadIntegrationCallback(int result, const char* error_message,
                                                  rc_client_t* client, void* userdata)
 {
@@ -1654,29 +1654,29 @@ void AchievementManager::LoadIntegrationCallback(int result, const char* error_m
   switch (result)
   {
   case RC_OK:
-    INFO_LOG_FMT(ACHIEVEMENTS, "RAIntegration.dll found.");
-    instance.m_dll_found = true;
-    rc_client_set_allow_background_memory_reads(instance.m_client, 0);
-    rc_client_raintegration_set_event_handler(instance.m_client, RAIntegrationEventHandler);
-    rc_client_raintegration_set_write_memory_function(instance.m_client, MemoryPoker);
-    rc_client_raintegration_set_get_game_name_function(instance.m_client, GameTitleEstimateHandler);
-    instance.dev_menu_update_event.Trigger();
+    fprintf(stdout, "RAIntegration.dll found.");
+    //instance.m_dll_found = true;
+    //rc_client_set_allow_background_memory_reads(instance.m_client, 0);
+    //rc_client_raintegration_set_event_handler(instance.m_client, RAIntegrationEventHandler);
+    //rc_client_raintegration_set_write_memory_function(instance.m_client, MemoryPoker);
+    //rc_client_raintegration_set_get_game_name_function(instance.m_client, GameTitleEstimateHandler);
+    //instance.dev_menu_update_event.Trigger();
     // TODO: hook up menu and dll event handlers
     break;
 
   case RC_MISSING_VALUE:
-    INFO_LOG_FMT(ACHIEVEMENTS, "RAIntegration.dll not found.");
+    fprintf(stdout, "RAIntegration.dll not found.");
     // DLL is not present; do nothing.
     break;
 
   default:
-    WARN_LOG_FMT(ACHIEVEMENTS, "Failed to load RAIntegration.dll. {}", error_message);
+    fprintf(stderr, "Failed to load RAIntegration.dll. %s\n", error_message);
     break;
   }
 
-  if (instance.HasAPIToken())
-    instance.Login("");
-  INFO_LOG_FMT(ACHIEVEMENTS, "Achievement Manager Initialized");
+  //if (instance.HasAPIToken())
+  //  instance.Login("");
+  fprintf(stdout, "Achievement Manager Initialized");
 }
 
 void AchievementManager::RAIntegrationEventHandler(const rc_client_raintegration_event_t* event,
@@ -1687,23 +1687,23 @@ void AchievementManager::RAIntegrationEventHandler(const rc_client_raintegration
   {
   case RC_CLIENT_RAINTEGRATION_EVENT_MENU_CHANGED:
   case RC_CLIENT_RAINTEGRATION_EVENT_MENUITEM_CHECKED_CHANGED:
-    instance.dev_menu_update_event.Trigger();
+    //instance.dev_menu_update_event.Trigger();
     break;
   case RC_CLIENT_RAINTEGRATION_EVENT_PAUSE:
   {
-    Core::QueueHostJob([](Core::System& system) { Core::SetState(system, Core::State::Paused); });
+    //Core::QueueHostJob([](Core::System& system) { Core::SetState(system, Core::State::Paused); });
     break;
   }
   case RC_CLIENT_RAINTEGRATION_EVENT_HARDCORE_CHANGED:
-    Config::SetBaseOrCurrent(Config::RA_HARDCORE_ENABLED,
-                             !Config::Get(Config::RA_HARDCORE_ENABLED));
+    //Config::SetBaseOrCurrent(Config::RA_HARDCORE_ENABLED,
+    //                         !Config::Get(Config::RA_HARDCORE_ENABLED));
     break;
   default:
-    WARN_LOG_FMT(ACHIEVEMENTS, "Unsupported raintegration event. {}", event->type);
+    fprintf(stdout, "Unsupported raintegration event. %u\n", event->type);
     break;
   }
 }
-
+/*
 void AchievementManager::MemoryPoker(u32 address, u8* buffer, u32 num_bytes, rc_client_t* client)
 {
   if (buffer == nullptr)
@@ -1723,6 +1723,7 @@ void AchievementManager::GameTitleEstimateHandler(char* buffer, u32 buffer_size,
   std::lock_guard lg{instance.m_lock};
   strncpy(buffer, instance.m_title_estimate.c_str(), static_cast<size_t>(buffer_size));
 }
-#endif  // RC_CLIENT_SUPPORTS_RAINTEGRATION
 */
+#endif  // RC_CLIENT_SUPPORTS_RAINTEGRATION
+
 #endif  // USE_RETRO_ACHIEVEMENTS

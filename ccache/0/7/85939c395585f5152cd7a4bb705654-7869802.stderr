@@ -1,0 +1,8 @@
+In file included from ../achievements/AchievementWrapper.cc:2:
+../achievements/AchievementManager.hh:7:13: warning: 'RC_CLIENT_SUPPORTS_RAINTEGRATION' macro redefined [-Wmacro-redefined]
+    7 |     #define RC_CLIENT_SUPPORTS_RAINTEGRATION
+      |             ^
+<command line>:13:9: note: previous definition is here
+   13 | #define RC_CLIENT_SUPPORTS_RAINTEGRATION 1
+      |         ^
+1 warning generated.

@@ -1,0 +1,7 @@
+../chardev/char-pipe.c:65:31: warning: incompatible pointer types passing 'char *' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+   65 |     s->file = CreateNamedPipe(openname,
+      |                               ^~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/namedpipeapi.h:28:54: note: passing argument to parameter 'lpName' here
+   28 |   WINBASEAPI HANDLE WINAPI CreateNamedPipeW (LPCWSTR lpName, DWORD dwOpenMode, DWORD dwPipeMode, DWORD nMaxInstances, DWORD nOutBufferSize, DWORD nInBufferSize, DWORD nDefaultTimeOut, LPSECURITY_ATTRIBUTES lpSecurityAttributes);
+      |                                                      ^
+1 warning generated.

@@ -1,0 +1,8 @@
+../achievements/AchievementManager.cc:1703:62: warning: format specifies type 'char *' but the argument has type 'uint32_t' (aka 'unsigned int') [-Wformat]
+ 1703 |     fprintf(stdout, "Unsupported raintegration event. %s\n", event->type);
+      |                                                       ~~     ^~~~~~~~~~~
+      |                                                       %u
+../achievements/AchievementManager.cc:1686:9: warning: unused variable 'instance' [-Wunused-variable]
+ 1686 |   auto& instance = AchievementManager::GetInstance();
+      |         ^~~~~~~~
+2 warnings generated.

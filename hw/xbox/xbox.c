@@ -58,8 +58,6 @@
 #include "hw/xbox/xbox.h"
 #include "smbus.h"
 
-#include "AchievementWrapper.h"
-
 #define MAX_IDE_BUS 2
 
 /* FIXME: Clean this up and propagate errors to UI */
@@ -256,9 +254,6 @@ void xbox_init_common(MachineState *machine,
 
     /* allocate ram and load rom/bios */
     xbox_memory_init(pcms, system_memory, rom_memory, &ram_memory);
-
-    //Initialize RetroAchievements
-    achievement_wrapper_init();
 
     gsi_state = pc_gsi_create(&x86ms->gsi, pcmc->pci_enabled);
 

@@ -1,0 +1,4 @@
+../common/HttpRequest.cc:292:15: warning: unused variable 'type' [-Wunused-variable]
+  292 |   const char* type = method == Method::POST ? "POST" : "GET";
+      |               ^~~~
+1 warning generated.

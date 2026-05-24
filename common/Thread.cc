@@ -4,7 +4,7 @@
 #include "common/Thread.hh"
 
 #ifdef _WIN32
-#include <Windows.h>
+#include <windows.h>
 #include <processthreadsapi.h>
 #else
 #include <pthread.h>
@@ -67,6 +67,7 @@ void SwitchCurrentThread()
   SwitchToThread();
 }
 
+/*
 // Sets the debugger-visible name of the current thread.
 // Uses trick documented in:
 // https://docs.microsoft.com/en-us/visualstudio/debugger/how-to-set-a-thread-name-in-native-code
@@ -97,6 +98,7 @@ static void SetCurrentThreadNameViaException(const char* name)
   {
   }
 }
+*/
 
 static void SetCurrentThreadNameViaApi(const char* name)
 {
@@ -111,11 +113,13 @@ static void SetCurrentThreadNameViaApi(const char* name)
   }
 }
 
+
 void SetCurrentThreadName(const char* name)
 {
-  SetCurrentThreadNameViaException(name);
+  //SetCurrentThreadNameViaException(name);
   SetCurrentThreadNameViaApi(name);
 }
+
 
 #else  // !WIN32, so must be POSIX threads
 

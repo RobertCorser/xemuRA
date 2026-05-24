@@ -1,0 +1,57 @@
+../hw/xbox/nv2a/pgraph/glsl/psh.c:427:9: warning: variable 'res' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+  427 |         assert(false);
+      |         ^~~~~~~~~~~~~
+/xemu/include/qemu/osdep.h:264:20: note: expanded from macro 'assert'
+  264 | #define assert(x)  g_assert(x)
+      |                    ^~~~~~~~~~~
+../../opt/mxe/usr/x86_64-w64-mingw32.static/include/glib-2.0/glib/gtestutils.h:276:49: note: expanded from macro 'g_assert'
+  276 |                                              if G_LIKELY (expr) ; else \
+      |                                                 ^~~~~~~~~~~~~~~
+../../opt/mxe/usr/x86_64-w64-mingw32.static/include/glib-2.0/glib/gmacros.h:1250:25: note: expanded from macro 'G_LIKELY'
+ 1250 | #define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../hw/xbox/nv2a/pgraph/glsl/psh.c:432:12: note: uninitialized use occurs here
+  432 |     return res;
+      |            ^~~
+../hw/xbox/nv2a/pgraph/glsl/psh.c:427:9: note: remove the 'if' if its condition is always false
+  427 |         assert(false);
+      |         ^
+/xemu/include/qemu/osdep.h:264:20: note: expanded from macro 'assert'
+  264 | #define assert(x)  g_assert(x)
+      |                    ^
+../../opt/mxe/usr/x86_64-w64-mingw32.static/include/glib-2.0/glib/gtestutils.h:276:46: note: expanded from macro 'g_assert'
+  276 |                                              if G_LIKELY (expr) ; else \
+      |                                              ^
+../hw/xbox/nv2a/pgraph/glsl/psh.c:399:17: note: initialize the variable 'res' to silence this warning
+  399 |     MString *res;
+      |                 ^
+      |                  = NULL
+../hw/xbox/nv2a/pgraph/glsl/psh.c:459:9: warning: variable 'res' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+  459 |         assert(false);
+      |         ^~~~~~~~~~~~~
+/xemu/include/qemu/osdep.h:264:20: note: expanded from macro 'assert'
+  264 | #define assert(x)  g_assert(x)
+      |                    ^~~~~~~~~~~
+../../opt/mxe/usr/x86_64-w64-mingw32.static/include/glib-2.0/glib/gtestutils.h:276:49: note: expanded from macro 'g_assert'
+  276 |                                              if G_LIKELY (expr) ; else \
+      |                                                 ^~~~~~~~~~~~~~~
+../../opt/mxe/usr/x86_64-w64-mingw32.static/include/glib-2.0/glib/gmacros.h:1250:25: note: expanded from macro 'G_LIKELY'
+ 1250 | #define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../hw/xbox/nv2a/pgraph/glsl/psh.c:462:12: note: uninitialized use occurs here
+  462 |     return res;
+      |            ^~~
+../hw/xbox/nv2a/pgraph/glsl/psh.c:459:9: note: remove the 'if' if its condition is always false
+  459 |         assert(false);
+      |         ^
+/xemu/include/qemu/osdep.h:264:20: note: expanded from macro 'assert'
+  264 | #define assert(x)  g_assert(x)
+      |                    ^
+../../opt/mxe/usr/x86_64-w64-mingw32.static/include/glib-2.0/glib/gtestutils.h:276:46: note: expanded from macro 'g_assert'
+  276 |                                              if G_LIKELY (expr) ; else \
+      |                                              ^
+../hw/xbox/nv2a/pgraph/glsl/psh.c:437:17: note: initialize the variable 'res' to silence this warning
+  437 |     MString *res;
+      |                 ^
+      |                  = NULL
+2 warnings generated.

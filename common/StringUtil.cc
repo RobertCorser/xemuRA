@@ -25,12 +25,13 @@
 //#include "common/Logging/Log.h"
 
 #ifdef _WIN32
-#include <Windows.h>
+#include <windows.h>
 #include <shellapi.h>
+#include <share.h>
 constexpr u32 CODEPAGE_SHIFT_JIS = 932;
 constexpr u32 CODEPAGE_WINDOWS_1252 = 1252;
 
-#include "Common/Swap.h"
+#include "common/Swap.hh"
 #else
 #include <cerrno>
 #include <iconv.h>
@@ -820,7 +821,7 @@ std::u16string UTF8ToUTF16(std::string_view input)
 // This is a replacement for path::u8path, which is deprecated starting with C++20.
 std::filesystem::path StringToPath(std::string_view path)
 {
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(_WIN32)
   return std::filesystem::path(UTF8ToWString(path));
 #else
   return std::filesystem::path(path);
@@ -831,10 +832,10 @@ std::filesystem::path StringToPath(std::string_view path)
 // path::u8string returns std::u8string starting with C++20, which is annoying to convert.
 std::string PathToString(const std::filesystem::path& path)
 {
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(_WIN32)
   return WStringToUTF8(path.native());
 #else
-  return path.native();
+  return path.native().c_str();
 #endif
 }
 

@@ -35,7 +35,7 @@
 // #include "VideoCommon/Assets/CustomTextureData.h"
 
 #ifdef RC_CLIENT_SUPPORTS_RAINTEGRATION
-#include <rcheevos/include/rc_client_raintegration.h>
+#include "rc_client_raintegration.h"
 #endif // RC_CLIENT_SUPPORTS_RAINTEGRATION
 
 namespace Core {
@@ -113,7 +113,7 @@ public:
     Common::HookableEvent<int> login_event;
 
     static AchievementManager &GetInstance();
-    void Init();
+    void Init(void* hwnd);
     void Login(const std::string &password);
     bool HasAPIToken() const;
     // void LoadGame(const DiscIO::Volume* volume);
@@ -282,6 +282,7 @@ private:
                             rc_client_t *client);
     static void GameTitleEstimateHandler(char *buffer, u32 buffer_size,
                                          rc_client_t *client);
+
 #endif // RC_CLIENT_SUPPORTS_RAINTEGRATION
 
     rc_client_t *m_client{};

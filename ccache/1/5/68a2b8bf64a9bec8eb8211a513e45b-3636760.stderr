@@ -1,0 +1,7 @@
+../chardev/char-file.c:63:22: warning: incompatible pointer types passing 'char *' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+   63 |     out = CreateFile(file->out, accessmode, FILE_SHARE_READ, NULL, flags,
+      |                      ^~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/fileapi.h:64:49: note: passing argument to parameter 'lpFileName' here
+   64 |   WINBASEAPI HANDLE WINAPI CreateFileW (LPCWSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+      |                                                 ^
+1 warning generated.

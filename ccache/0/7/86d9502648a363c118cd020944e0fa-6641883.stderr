@@ -1,0 +1,25 @@
+In file included from ../hw/xbox/nv2a/pgraph/vk/reports.c:20:
+In file included from ../hw/xbox/nv2a/pgraph/vk/renderer.h:38:
+../subprojects/VulkanMemoryAllocator/include/vk_mem_alloc.h:2171:44: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified) [-Wnullability-completeness]
+ 2171 |     VmaAllocation VMA_NOT_NULL allocation, HANDLE hTargetProcess, HANDLE* VMA_NOT_NULL pHandle);
+      |                                            ^
+../subprojects/VulkanMemoryAllocator/include/vk_mem_alloc.h:2171:44: note: insert '_Nullable' if the pointer may be null
+ 2171 |     VmaAllocation VMA_NOT_NULL allocation, HANDLE hTargetProcess, HANDLE* VMA_NOT_NULL pHandle);
+      |                                            ^
+      |                                                   _Nullable
+../subprojects/VulkanMemoryAllocator/include/vk_mem_alloc.h:2171:44: note: insert '_Nonnull' if the pointer should never be null
+ 2171 |     VmaAllocation VMA_NOT_NULL allocation, HANDLE hTargetProcess, HANDLE* VMA_NOT_NULL pHandle);
+      |                                            ^
+      |                                                   _Nonnull
+../subprojects/VulkanMemoryAllocator/include/vk_mem_alloc.h:2171:67: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified) [-Wnullability-completeness]
+ 2171 |     VmaAllocation VMA_NOT_NULL allocation, HANDLE hTargetProcess, HANDLE* VMA_NOT_NULL pHandle);
+      |                                                                   ^
+../subprojects/VulkanMemoryAllocator/include/vk_mem_alloc.h:2171:67: note: insert '_Nullable' if the pointer may be null
+ 2171 |     VmaAllocation VMA_NOT_NULL allocation, HANDLE hTargetProcess, HANDLE* VMA_NOT_NULL pHandle);
+      |                                                                   ^     
+      |                                                                          _Nullable 
+../subprojects/VulkanMemoryAllocator/include/vk_mem_alloc.h:2171:67: note: insert '_Nonnull' if the pointer should never be null
+ 2171 |     VmaAllocation VMA_NOT_NULL allocation, HANDLE hTargetProcess, HANDLE* VMA_NOT_NULL pHandle);
+      |                                                                   ^     
+      |                                                                          _Nonnull 
+2 warnings generated.

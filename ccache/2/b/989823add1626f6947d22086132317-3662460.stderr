@@ -1,0 +1,7 @@
+../util/qemu-thread-win32.c:32:39: warning: incompatible pointer types passing 'const char[13]' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+   32 |         kernel32_module = LoadLibrary("kernel32.dll");
+      |                                       ^~~~~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/winbase.h:1609:51: note: passing argument to parameter 'lpLibFileName' here
+ 1609 |   WINBASEAPI HMODULE WINAPI LoadLibraryW (LPCWSTR lpLibFileName);
+      |                                                   ^
+1 warning generated.

@@ -23,6 +23,8 @@ xemu_ss.add(files(
   'widgets.cc',
 ))
 
+xemu_ss.add(achievements_dep)
+
 if host_os == 'windows'
   xemu_ss.add(files('update.cc'))
 endif

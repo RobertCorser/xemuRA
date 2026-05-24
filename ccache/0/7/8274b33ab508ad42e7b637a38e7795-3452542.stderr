@@ -1,0 +1,7 @@
+../winpcap-loader/loader.c:86:30: warning: incompatible pointer types passing 'const char[10]' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+   86 |         HANDLE hwpcap = LoadLibrary("wpcap.dll");
+      |                                     ^~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/winbase.h:1609:51: note: passing argument to parameter 'lpLibFileName' here
+ 1609 |   WINBASEAPI HMODULE WINAPI LoadLibraryW (LPCWSTR lpLibFileName);
+      |                                                   ^
+1 warning generated.

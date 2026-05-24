@@ -1,0 +1,55 @@
+../block/file-win32.c:254:26: warning: incompatible pointer types passing 'char[16]' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  254 |         GetDiskFreeSpace(s->drive_path, &sectorsPerCluster,
+      |                          ^~~~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/fileapi.h:74:56: note: passing argument to parameter 'lpRootPathName' here
+   74 |   WINBASEAPI WINBOOL WINAPI GetDiskFreeSpaceW (LPCWSTR lpRootPathName, LPDWORD lpSectorsPerCluster, LPDWORD lpBytesPerSector, LPDWORD lpNumberOfFreeClusters, LPDWORD lpTotalNumberOfClusters);
+      |                                                        ^
+../block/file-win32.c:402:39: warning: incompatible pointer types passing 'char[260]' to parameter of type 'LPWSTR' (aka 'unsigned short *') [-Wincompatible-pointer-types]
+  402 |         GetCurrentDirectory(MAX_PATH, buf);
+      |                                       ^~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/processenv.h:23:77: note: passing argument to parameter 'lpBuffer' here
+   23 |   WINBASEAPI DWORD WINAPI GetCurrentDirectoryW (DWORD nBufferLength, LPWSTR lpBuffer);
+      |                                                                             ^
+../block/file-win32.c:571:33: warning: incompatible pointer types passing 'char[16]' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  571 |         if (!GetDiskFreeSpaceEx(s->drive_path, &available, &total, &total_free))
+      |                                 ^~~~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/fileapi.h:202:58: note: passing argument to parameter 'lpDirectoryName' here
+  202 |   WINBASEAPI WINBOOL WINAPI GetDiskFreeSpaceExW (LPCWSTR lpDirectoryName, PULARGE_INTEGER lpFreeBytesAvailableToCaller, PULARGE_INTEGER lpTotalNumberOfBytes, PULARGE_INTEGER lpTotalNumberOfFreeBytes);
+      |                                                          ^
+../block/file-win32.c:601:59: warning: incompatible pointer types passing 'const char[9]' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  601 |         (get_compressed_t) GetProcAddress(GetModuleHandle("kernel32"),
+      |                                                           ^~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/libloaderapi.h:167:55: note: passing argument to parameter 'lpModuleName' here
+  167 |   WINBASEAPI HMODULE WINAPI GetModuleHandleW (LPCWSTR lpModuleName);
+      |                                                       ^
+../block/file-win32.c:699:28: warning: incompatible pointer types passing 'char[260]' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  699 |     rs->hfile = CreateFile(state->bs->filename, access_flags,
+      |                            ^~~~~~~~~~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/fileapi.h:64:49: note: passing argument to parameter 'lpFileName' here
+   64 |   WINBASEAPI HANDLE WINAPI CreateFileW (LPCWSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+      |                                                 ^
+../block/file-win32.c:816:44: warning: incompatible pointer types passing 'char[256]' to parameter of type 'LPWSTR' (aka 'unsigned short *') [-Wincompatible-pointer-types]
+  816 |     GetLogicalDriveStrings(sizeof(drives), drives);
+      |                                            ^~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/fileapi.h:103:80: note: passing argument to parameter 'lpBuffer' here
+  103 |   WINBASEAPI DWORD WINAPI GetLogicalDriveStringsW (DWORD nBufferLength, LPWSTR lpBuffer);
+      |                                                                                ^
+../block/file-win32.c:818:29: warning: incompatible pointer types passing 'char *' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  818 |         type = GetDriveType(pdrv);
+      |                             ^~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/fileapi.h:76:49: note: passing argument to parameter 'lpRootPathName' here
+   76 |   WINBASEAPI UINT WINAPI GetDriveTypeW (LPCWSTR lpRootPathName);
+      |                                                 ^
+../block/file-win32.c:825:25: warning: incompatible pointer types passing 'char *' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  825 |         pdrv += lstrlen(pdrv) + 1;
+      |                         ^~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/winbase.h:1504:43: note: passing argument to parameter 'lpString' here
+ 1504 |   WINBASEAPI int WINAPI lstrlenW (LPCWSTR lpString);
+      |                                           ^
+../block/file-win32.c:841:29: warning: incompatible pointer types passing 'char[16]' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  841 |         type = GetDriveType(s->drive_path);
+      |                             ^~~~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/fileapi.h:76:49: note: passing argument to parameter 'lpRootPathName' here
+   76 |   WINBASEAPI UINT WINAPI GetDriveTypeW (LPCWSTR lpRootPathName);
+      |                                                 ^
+9 warnings generated.

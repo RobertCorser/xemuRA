@@ -1,0 +1,13 @@
+../util/oslib-win32.c:376:20: warning: incompatible pointer types passing 'char *' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  376 |     if (DeleteFile(path) == 0 && GetLastError() != ERROR_FILE_NOT_FOUND) {
+      |                    ^~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/fileapi.h:194:50: note: passing argument to parameter 'lpFileName' here
+  194 |   WINBASEAPI WINBOOL WINAPI DeleteFileW (LPCWSTR lpFileName);
+      |                                                  ^
+../util/oslib-win32.c:442:20: warning: incompatible pointer types passing 'char *' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  442 |         DeleteFile(path);
+      |                    ^~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/fileapi.h:194:50: note: passing argument to parameter 'lpFileName' here
+  194 |   WINBASEAPI WINBOOL WINAPI DeleteFileW (LPCWSTR lpFileName);
+      |                                                  ^
+2 warnings generated.

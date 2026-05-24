@@ -1,0 +1,13 @@
+../chardev/char-win.c:96:26: warning: incompatible pointer types passing 'const char *' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+   96 |     s->file = CreateFile(filename, GENERIC_READ | GENERIC_WRITE, 0, NULL,
+      |                          ^~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/fileapi.h:64:49: note: passing argument to parameter 'lpFileName' here
+   64 |   WINBASEAPI HANDLE WINAPI CreateFileW (LPCWSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+      |                                                 ^
+../chardev/char-win.c:111:26: warning: incompatible pointer types passing 'const char *' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  111 |     GetDefaultCommConfig(filename, &comcfg, &size);
+      |                          ^~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/winbase.h:2669:60: note: passing argument to parameter 'lpszName' here
+ 2669 |   WINBASEAPI WINBOOL WINAPI GetDefaultCommConfigW (LPCWSTR lpszName, LPCOMMCONFIG lpCC, LPDWORD lpdwSize);
+      |                                                            ^
+2 warnings generated.

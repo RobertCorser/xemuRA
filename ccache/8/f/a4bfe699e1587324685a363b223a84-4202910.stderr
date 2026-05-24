@@ -1,0 +1,86 @@
+../util/qemu-sockets.c:327:39: warning: format specifies type 'char *' but the argument has type 'WCHAR *' (aka 'unsigned short *') [-Wformat]
+  326 |         error_setg(errp, "address resolution failed for %s:%s: %s",
+      |                                                                ~~
+  327 |                    saddr->host, port, gai_strerror(rc));
+      |                                       ^~~~~~~~~~~~~~~~
+/xemu/include/qapi/error.h:319:35: note: expanded from macro 'error_setg'
+  319 |                         (fmt), ## __VA_ARGS__)
+      |                          ~~~      ^~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/ws2tcpip.h:243:22: note: expanded from macro 'gai_strerror'
+  243 | #define gai_strerror __MINGW_NAME_AW(gai_strerror)
+      |                      ^
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/_mingw_unicode.h:12:32: note: expanded from macro '__MINGW_NAME_AW'
+   12 | # define __MINGW_NAME_AW(func) func##W
+      |                                ^
+<scratch space>:82:1: note: expanded from here
+   82 | gai_strerrorW
+      | ^
+../util/qemu-sockets.c:491:46: warning: format specifies type 'char *' but the argument has type 'WCHAR *' (aka 'unsigned short *') [-Wformat]
+  490 |         error_setg(errp, "address resolution failed for %s:%s: %s",
+      |                                                                ~~
+  491 |                    saddr->host, saddr->port, gai_strerror(rc));
+      |                                              ^~~~~~~~~~~~~~~~
+/xemu/include/qapi/error.h:319:35: note: expanded from macro 'error_setg'
+  319 |                         (fmt), ## __VA_ARGS__)
+      |                          ~~~      ^~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/ws2tcpip.h:243:22: note: expanded from macro 'gai_strerror'
+  243 | #define gai_strerror __MINGW_NAME_AW(gai_strerror)
+      |                      ^
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/_mingw_unicode.h:12:32: note: expanded from macro '__MINGW_NAME_AW'
+   12 | # define __MINGW_NAME_AW(func) func##W
+      |                                ^
+<scratch space>:100:1: note: expanded from here
+  100 | gai_strerrorW
+      | ^
+../util/qemu-sockets.c:578:20: warning: format specifies type 'char *' but the argument has type 'WCHAR *' (aka 'unsigned short *') [-Wformat]
+  577 |         error_setg(errp, "address resolution failed for %s:%s: %s", addr, port,
+      |                                                                ~~
+  578 |                    gai_strerror(rc));
+      |                    ^~~~~~~~~~~~~~~~
+/xemu/include/qapi/error.h:319:35: note: expanded from macro 'error_setg'
+  319 |                         (fmt), ## __VA_ARGS__)
+      |                          ~~~      ^~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/ws2tcpip.h:243:22: note: expanded from macro 'gai_strerror'
+  243 | #define gai_strerror __MINGW_NAME_AW(gai_strerror)
+      |                      ^
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/_mingw_unicode.h:12:32: note: expanded from macro '__MINGW_NAME_AW'
+   12 | # define __MINGW_NAME_AW(func) func##W
+      |                                ^
+<scratch space>:106:1: note: expanded from here
+  106 | gai_strerrorW
+      | ^
+../util/qemu-sockets.c:604:20: warning: format specifies type 'char *' but the argument has type 'WCHAR *' (aka 'unsigned short *') [-Wformat]
+  603 |         error_setg(errp, "address resolution failed for %s:%s: %s", addr, port,
+      |                                                                ~~
+  604 |                    gai_strerror(rc));
+      |                    ^~~~~~~~~~~~~~~~
+/xemu/include/qapi/error.h:319:35: note: expanded from macro 'error_setg'
+  319 |                         (fmt), ## __VA_ARGS__)
+      |                          ~~~      ^~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/ws2tcpip.h:243:22: note: expanded from macro 'gai_strerror'
+  243 | #define gai_strerror __MINGW_NAME_AW(gai_strerror)
+      |                      ^
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/_mingw_unicode.h:12:32: note: expanded from macro '__MINGW_NAME_AW'
+   12 | # define __MINGW_NAME_AW(func) func##W
+      |                                ^
+<scratch space>:109:1: note: expanded from here
+  109 | gai_strerrorW
+      | ^
+../util/qemu-sockets.c:1374:20: warning: format specifies type 'char *' but the argument has type 'WCHAR *' (aka 'unsigned short *') [-Wformat]
+ 1373 |         error_setg(errp, "Cannot format numeric socket address: %s",
+      |                                                                 ~~
+ 1374 |                    gai_strerror(ret));
+      |                    ^~~~~~~~~~~~~~~~~
+/xemu/include/qapi/error.h:319:35: note: expanded from macro 'error_setg'
+  319 |                         (fmt), ## __VA_ARGS__)
+      |                          ~~~      ^~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/ws2tcpip.h:243:22: note: expanded from macro 'gai_strerror'
+  243 | #define gai_strerror __MINGW_NAME_AW(gai_strerror)
+      |                      ^
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/_mingw_unicode.h:12:32: note: expanded from macro '__MINGW_NAME_AW'
+   12 | # define __MINGW_NAME_AW(func) func##W
+      |                                ^
+<scratch space>:175:1: note: expanded from here
+  175 | gai_strerrorW
+      | ^
+5 warnings generated.

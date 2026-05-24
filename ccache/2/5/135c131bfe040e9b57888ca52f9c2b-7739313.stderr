@@ -1,0 +1,4 @@
+../common/Thread.cc:103:13: warning: unused function 'SetCurrentThreadNameViaApi' [-Wunused-function]
+  103 | static void SetCurrentThreadNameViaApi(const char* name)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning generated.

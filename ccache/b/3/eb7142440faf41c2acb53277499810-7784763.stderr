@@ -1,0 +1,15 @@
+In file included from ../common/CommonFuncs.cc:4:
+/xemu/common/CommonFuncs.hh:31:9: warning: 'fseeko' macro redefined [-Wmacro-redefined]
+   31 | #define fseeko _fseeki64
+      |         ^
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/stdio.h:687:9: note: previous definition is here
+  687 | #define fseeko fseeko64
+      |         ^
+In file included from ../common/CommonFuncs.cc:4:
+/xemu/common/CommonFuncs.hh:32:9: warning: 'ftello' macro redefined [-Wmacro-redefined]
+   32 | #define ftello _ftelli64
+      |         ^
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/stdio.h:694:9: note: previous definition is here
+  694 | #define ftello ftello64
+      |         ^
+2 warnings generated.

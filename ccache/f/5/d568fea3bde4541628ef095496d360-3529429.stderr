@@ -1,0 +1,7 @@
+../util/cutils.c:1057:35: warning: incompatible pointer types passing 'char[260]' to parameter of type 'LPWSTR' (aka 'unsigned short *') [-Wincompatible-pointer-types]
+ 1057 |     len = GetModuleFileName(NULL, buf, sizeof(buf) - 1);
+      |                                   ^~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/libloaderapi.h:114:71: note: passing argument to parameter 'lpFilename' here
+  114 |   WINBASEAPI DWORD WINAPI GetModuleFileNameW (HMODULE hModule, LPWSTR lpFilename, DWORD nSize);
+      |                                                                       ^
+1 warning generated.

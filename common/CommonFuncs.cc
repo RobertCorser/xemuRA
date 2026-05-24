@@ -9,11 +9,11 @@
 
 #ifdef _WIN32
 #include <windows.h>
-#include <SetupAPI.h>
+#include <setupapi.h>
 
 #define strerror_r(err, buf, len) strerror_s(buf, len, err)
 
-#include "Common/StringUtil.h"
+#include "common/StringUtil.hh"
 #endif
 
 namespace Common

@@ -1,0 +1,67 @@
+../net/tap-win32.c:206:9: warning: incompatible pointer types passing 'const char[78]' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  206 |         ADAPTER_KEY,
+      |         ^~~~~~~~~~~
+../net/tap-win32.c:62:21: note: expanded from macro 'ADAPTER_KEY'
+   62 | #define ADAPTER_KEY "SYSTEM\\CurrentControlSet\\Control\\Class\\{4D36E972-E325-11CE-BFC1-08002BE10318}"
+      |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/winreg.h:418:57: note: passing argument to parameter 'lpSubKey' here
+  418 |   WINADVAPI LONG WINAPI RegOpenKeyExW(HKEY hKey,LPCWSTR lpSubKey,DWORD ulOptions,REGSAM samDesired,PHKEY phkResult);
+      |                                                         ^
+../net/tap-win32.c:229:13: warning: incompatible pointer types passing 'char[256]' to parameter of type 'LPWSTR' (aka 'unsigned short *') [-Wincompatible-pointer-types]
+  229 |             enum_name,
+      |             ^~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/winreg.h:411:70: note: passing argument to parameter 'lpName' here
+  411 |   WINADVAPI LONG WINAPI RegEnumKeyExW(HKEY hKey,DWORD dwIndex,LPWSTR lpName,LPDWORD lpcchName,LPDWORD lpReserved,LPWSTR lpClass,LPDWORD lpcchClass,PFILETIME lpftLastWriteTime);
+      |                                                                      ^
+../net/tap-win32.c:246:13: warning: incompatible pointer types passing 'char *' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  246 |             unit_string,
+      |             ^~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/winreg.h:418:57: note: passing argument to parameter 'lpSubKey' here
+  418 |   WINADVAPI LONG WINAPI RegOpenKeyExW(HKEY hKey,LPCWSTR lpSubKey,DWORD ulOptions,REGSAM samDesired,PHKEY phkResult);
+      |                                                         ^
+../net/tap-win32.c:257:17: warning: incompatible pointer types passing 'char[12]' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  257 |                 component_id_string,
+      |                 ^~~~~~~~~~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/winreg.h:422:60: note: passing argument to parameter 'lpValueName' here
+  422 |   WINADVAPI LONG WINAPI RegQueryValueExW(HKEY hKey,LPCWSTR lpValueName,LPDWORD lpReserved,LPDWORD lpType,LPBYTE lpData,LPDWORD lpcbData);
+      |                                                            ^
+../net/tap-win32.c:267:21: warning: incompatible pointer types passing 'char[17]' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  267 |                     net_cfg_instance_id_string,
+      |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/winreg.h:422:60: note: passing argument to parameter 'lpValueName' here
+  422 |   WINADVAPI LONG WINAPI RegQueryValueExW(HKEY hKey,LPCWSTR lpValueName,LPDWORD lpReserved,LPDWORD lpType,LPBYTE lpData,LPDWORD lpcbData);
+      |                                                            ^
+../net/tap-win32.c:305:9: warning: incompatible pointer types passing 'const char[80]' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  305 |         NETWORK_CONNECTIONS_KEY,
+      |         ^~~~~~~~~~~~~~~~~~~~~~~
+../net/tap-win32.c:64:33: note: expanded from macro 'NETWORK_CONNECTIONS_KEY'
+   64 | #define NETWORK_CONNECTIONS_KEY "SYSTEM\\CurrentControlSet\\Control\\Network\\{4D36E972-E325-11CE-BFC1-08002BE10318}"
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/winreg.h:418:57: note: passing argument to parameter 'lpSubKey' here
+  418 |   WINADVAPI LONG WINAPI RegOpenKeyExW(HKEY hKey,LPCWSTR lpSubKey,DWORD ulOptions,REGSAM samDesired,PHKEY phkResult);
+      |                                                         ^
+../net/tap-win32.c:327:13: warning: incompatible pointer types passing 'char[256]' to parameter of type 'LPWSTR' (aka 'unsigned short *') [-Wincompatible-pointer-types]
+  327 |             enum_name,
+      |             ^~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/winreg.h:411:70: note: passing argument to parameter 'lpName' here
+  411 |   WINADVAPI LONG WINAPI RegEnumKeyExW(HKEY hKey,DWORD dwIndex,LPWSTR lpName,LPDWORD lpcchName,LPDWORD lpReserved,LPWSTR lpClass,LPDWORD lpcchClass,PFILETIME lpftLastWriteTime);
+      |                                                                      ^
+../net/tap-win32.c:345:13: warning: incompatible pointer types passing 'char *' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  345 |             connection_string,
+      |             ^~~~~~~~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/winreg.h:418:57: note: passing argument to parameter 'lpSubKey' here
+  418 |   WINADVAPI LONG WINAPI RegOpenKeyExW(HKEY hKey,LPCWSTR lpSubKey,DWORD ulOptions,REGSAM samDesired,PHKEY phkResult);
+      |                                                         ^
+../net/tap-win32.c:354:17: warning: incompatible pointer types passing 'const char[5]' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  354 |                 name_string,
+      |                 ^~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/winreg.h:422:60: note: passing argument to parameter 'lpValueName' here
+  422 |   WINADVAPI LONG WINAPI RegQueryValueExW(HKEY hKey,LPCWSTR lpValueName,LPDWORD lpReserved,LPDWORD lpType,LPBYTE lpData,LPDWORD lpcbData);
+      |                                                            ^
+../net/tap-win32.c:623:9: warning: incompatible pointer types passing 'char *' to parameter of type 'LPCWSTR' (aka 'const unsigned short *') [-Wincompatible-pointer-types]
+  623 |         device_path,
+      |         ^~~~~~~~~~~
+/opt/mxe/usr/x86_64-w64-mingw32.static/x86_64-w64-mingw32/include/fileapi.h:64:49: note: passing argument to parameter 'lpFileName' here
+   64 |   WINBASEAPI HANDLE WINAPI CreateFileW (LPCWSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+      |                                                 ^
+10 warnings generated.

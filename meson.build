@@ -25,6 +25,15 @@ ss = import('sourceset')
 fs = import('fs')
 
 host_os = host_machine.system()
+
+add_global_arguments('-DUSE_RETRO_ACHIEVEMENTS', language: ['cpp'])
+
+if host_os == 'windows'
+add_global_arguments('-DRC_CLIENT_SUPPORTS_RAINTEGRATION', language: ['cpp'])
+add_global_arguments('-DUNICODE', language: ['cpp'])
+add_global_arguments('-D_UNICODE', language:['cpp'])
+endif
+
 config_host = keyval.load(meson.current_build_dir() / 'config-host.mak')
 
 # Temporary directory used for files created while
@@ -3970,6 +3979,10 @@ hw_common_arch = {}
 target_common_arch = {}
 target_common_system_arch = {}
 
+# RetroAchievements
+subdir('common')
+subdir('achievements')
+
 # NOTE: the trace/ subdirectory needs the qapi_trace_events variable
 # that is filled in by qapi/.
 subdir('qapi')
@@ -3990,10 +4003,6 @@ if have_system
 else
   subdir('hw/core')
 endif
-
-# RetroAchievements
-subdir('common')
-subdir('achievements')
 
 if enable_modules
   libmodulecommon = static_library('module-common', files('module-common.c') + genh, pic: true, c_args: '-DBUILD_DSO')

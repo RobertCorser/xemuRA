@@ -1,0 +1,7 @@
+../achievements/AchievementManager.cc:1654:9: warning: unused variable 'instance' [-Wunused-variable]
+ 1654 |   auto& instance = AchievementManager::GetInstance();
+      |         ^~~~~~~~
+../achievements/AchievementManager.cc:1686:9: warning: unused variable 'instance' [-Wunused-variable]
+ 1686 |   auto& instance = AchievementManager::GetInstance();
+      |         ^~~~~~~~
+2 warnings generated.

@@ -29,6 +29,10 @@
 #include "update.hh"
 #include "../xemu-os-utils.h"
 
+#ifdef RC_CLIENT_SUPPORTS_RAINTEGRATION
+#include "AchievementManager.hh"
+#endif
+
 extern float g_main_menu_height; // FIXME
 
 #ifdef CONFIG_RENDERDOC
@@ -84,8 +88,24 @@ void ProcessKeyboardShortcuts(void)
 #endif
 }
 
+
+#ifdef RC_CLIENT_SUPPORTS_RAINTEGRATION
+void* GetWindow(){
+    return ImGui::GetMainViewport()->PlatformHandle;
+}
+#endif
+
 void ShowMainMenu()
 {
+    // TODO: Move the RetroAchievement code in here to somewhere that doesn't get called in a loop. Or wrap it in an If.
+    // Although it is useful here as it allows for enabling RetroAchievements without having to restart xemu
+    // Maybe its not so bad being here after all. Maybe its not a big deal being here. I dunno. I am a simple man.
+    #ifdef RC_CLIENT_SUPPORTS_RAINTEGRATION
+    AchievementManager& instance = AchievementManager::GetInstance();
+    instance.Init(GetWindow());
+    #endif
+    
+    
     bool running = runstate_is_running();
 
     if (ImGui::BeginMainMenuBar())
@@ -150,6 +170,8 @@ void ShowMainMenu()
 
             if (ImGui::MenuItem("Reset", SHORTCUT_MENU_TEXT(R))) ActionReset();
             if (ImGui::MenuItem("Exit", SHORTCUT_MENU_TEXT(Q))) ActionShutdown();
+
+            //TODO: Add RAIntegration Menu here
             ImGui::EndMenu();
         }
 
