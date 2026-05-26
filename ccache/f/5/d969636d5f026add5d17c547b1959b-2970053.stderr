@@ -1,0 +1,5 @@
+In file included from <built-in>:426:
+<command line>:5:31: warning: ISO C99 requires whitespace after the macro name [-Wc99-extensions]
+    5 | #define USE_RETRO_ACHIEVEMENTS, -DRC_CLIENT_SUPPORTS_HASH 1
+      |                               ^
+1 warning generated.

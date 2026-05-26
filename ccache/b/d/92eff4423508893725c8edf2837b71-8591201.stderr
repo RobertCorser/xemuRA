@@ -1,0 +1,10 @@
+../achievements/AchievementManager.cc:222:23: warning: unused variable 'volume_reader' [-Wunused-variable]
+  222 |   rc_hash_callbacks_t volume_reader;
+      |                       ^~~~~~~~~~~~~
+../achievements/AchievementManager.cc:1659:9: warning: unused variable 'instance' [-Wunused-variable]
+ 1659 |   auto& instance = AchievementManager::GetInstance();
+      |         ^~~~~~~~
+../achievements/AchievementManager.cc:1691:9: warning: unused variable 'instance' [-Wunused-variable]
+ 1691 |   auto& instance = AchievementManager::GetInstance();
+      |         ^~~~~~~~
+3 warnings generated.

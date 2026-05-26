@@ -116,7 +116,7 @@ public:
     void Init(void* hwnd);
     void Login(const std::string &password);
     bool HasAPIToken() const;
-    // void LoadGame(const DiscIO::Volume* volume);
+    void LoadGame(char* file_path);
     // void ChangeDisc(const DiscIO::Volume* volume);
     bool IsGameLoaded() const;
     void SetBackgroundExecutionAllowed(bool allowed);

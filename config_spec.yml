@@ -374,7 +374,9 @@ perf:
 rcheevos:
   enable_ra: bool
   username: string
-  api_token: string
+  api_token: 
+    type: string
+    default: no_token
   ra_function:
     enable_hardcore_mode:
       type: bool

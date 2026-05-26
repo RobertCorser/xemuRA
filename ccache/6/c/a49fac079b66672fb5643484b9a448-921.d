@@ -1,0 +1,2 @@
+CMakeFiles/cmTC_cc9c2.dir/src.c.obj: \
+  /xemu/build/subprojects/SDL3-3.4.8/__CMake_build/CMakeFiles/CMakeScratch/TryCompile-Z58B4Z/src.c

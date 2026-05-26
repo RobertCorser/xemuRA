@@ -6,6 +6,8 @@
 #include "AchievementManager.hh"
 
 #include <memory>
+#include <cstring>
+#include <fstream>
 
 #include "common/HttpRequest.hh"
 #include "ui/xemu-settings.h"
@@ -152,34 +154,35 @@ void AchievementManager::Login(const std::string& password)
 }
 
 
-/*
+
 bool AchievementManager::HasAPIToken() const
 {
-  return !Config::Get(Config::RA_API_TOKEN).empty();
+  return std::string(g_config.rcheevos.api_token) == "no_token";
+  //return !Config::Get(Config::RA_API_TOKEN).empty();
 }
-*/
 
-/*
-void AchievementManager::LoadGame(const DiscIO::Volume* volume)
+void AchievementManager::LoadGame(char* file_path)
 {
-  if (!Config::Get(Config::RA_ENABLED) || !HasAPIToken())
+  if (!g_config.rcheevos.enable_ra || !HasAPIToken())
   {
     return;
   }
   if (!m_client)
   {
-    ERROR_LOG_FMT(ACHIEVEMENTS,
-                  "Attempted to load game achievements without achievement client initialized.");
+    fprintf(stderr,
+                  "Attempted to load game achievements without achievement client initialized.\n");
     return;
   }
+  //TODO: Validate loaded file is actually a valid xiso file (validation doesn't have to be here. Could be in frontend)
+  /*
   if (volume == nullptr)
   {
     WARN_LOG_FMT(ACHIEVEMENTS, "Software format unsupported by AchievementManager.");
     if (rc_client_get_game_info(m_client))
     {
-      OSD::AddMessage("Unsupported media change; disabling achievements.", OSD::Duration::VERY_LONG,
-                      OSD::Color::RED);
-      CloseGame();
+      //TODO: Disable achievements and close the game (i.e. Eject the disc)
+      fprintf(stderr, "Unsupported media change; disabling achievements. TODO: ACTUALLY DISABLE ACHIEVEMENTS");
+      //CloseGame();
     }
     else
     {
@@ -187,9 +190,14 @@ void AchievementManager::LoadGame(const DiscIO::Volume* volume)
     }
     return;
   }
-  rc_client_set_unofficial_enabled(m_client, Config::Get(Config::RA_UNOFFICIAL_ENABLED));
-  rc_client_set_encore_mode_enabled(m_client, Config::Get(Config::RA_ENCORE_ENABLED));
-  rc_client_set_spectator_mode_enabled(m_client, Config::Get(Config::RA_SPECTATOR_ENABLED));
+  */
+  rc_client_set_unofficial_enabled(m_client, g_config.rcheevos.ra_function.enable_unofficial_achievements);
+  rc_client_set_encore_mode_enabled(m_client, g_config.rcheevos.ra_function.enable_encore_achievements);
+  //TODO: Look into spectator mode
+  //rc_client_set_spectator_mode_enabled(m_client, Config::Get(Config::RA_SPECTATOR_ENABLED));
+  
+  //TODO: See if this is needed (probably not?)
+  /*
   {
     std::lock_guard lg{m_lock};
 #ifdef RC_CLIENT_SUPPORTS_RAINTEGRATION
@@ -201,32 +209,51 @@ void AchievementManager::LoadGame(const DiscIO::Volume* volume)
     else
       m_title_estimate = "";
 #endif  // RC_CLIENT_SUPPORTS_RAINTEGRATION
-    if (!m_loading_volume)
+
+    
+  if (!m_loading_volume)
     {
       m_loading_volume = DiscIO::CreateVolume(volume->GetBlobReader().CopyReader());
     }
   }
+*/
+
   std::lock_guard lg{m_filereader_lock};
-  rc_hash_filereader volume_reader{
+
+  rc_hash_iterator_t hash_iterator;
+  rc_hash_initialize_iterator(&hash_iterator, file_path, NULL, NULL);
+
+  rc_hash_filereader file_reader{
       .open = &AchievementManager::FilereaderOpen,
       .seek = &AchievementManager::FilereaderSeek,
       .tell = &AchievementManager::FilereaderTell,
       .read = &AchievementManager::FilereaderRead,
-      .close = &AchievementManager::FilereaderClose,
+      .close = &AchievementManager::FilereaderClose
   };
-  rc_hash_init_custom_filereader(&volume_reader);
+
+  //rcheevos docs say to set iterator callbacks AFTER initializing iterator
+  hash_iterator.callbacks = {
+    .verbose_message = [](const char* message, const struct rc_hash_iterator* iterator){
+      fprintf(stdout, "%s", message);
+    },
+    .error_message = [](const char* error, const struct rc_hash_iterator* iterator){
+      fprintf(stderr, "%s", error);
+    },
+    .filereader = file_reader
+  };
+
+  //rc_hash_init_custom_filereader(&volume_reader);
   if (rc_client_get_game_info(m_client))
   {
     rc_client_begin_identify_and_change_media(m_client, "", NULL, 0, ChangeMediaCallback, NULL);
   }
   else
   {
-    u32 console_id = FindConsoleID(volume->GetVolumeType());
-    rc_client_begin_identify_and_load_game(m_client, console_id, "", NULL, 0, LoadGameCallback,
+    //u32 console_id = FindConsoleID(volume->GetVolumeType());
+    rc_client_begin_identify_and_load_game(m_client, RC_CONSOLE_XBOX, file_path, NULL, 0, LoadGameCallback,
                                            NULL);
   }
 }
-*/
 
 /*
 void AchievementManager::ChangeDisc(const DiscIO::Volume* volume)
@@ -779,7 +806,7 @@ std::vector<std::string> AchievementManager::GetActiveLeaderboards() const
 }
 */
 
-/*
+
 #ifdef RC_CLIENT_SUPPORTS_RAINTEGRATION
 const rc_client_raintegration_menu_t* AchievementManager::GetDevelopmentMenu()
 {
@@ -795,7 +822,6 @@ u32 AchievementManager::ActivateDevMenuItem(u32 menu_item_id)
   return rc_client_raintegration_activate_menu_item(m_client, menu_item_id);
 }
 #endif  // RC_CLIENT_SUPPORTS_RAINTEGRATION
-*/
 
 /*
 void AchievementManager::DoState(PointerWrap& p)
@@ -902,9 +928,13 @@ void AchievementManager::Shutdown()
 }
 */
 
-/*
+
 void* AchievementManager::FilereaderOpen(const char* path_utf8)
 {
+  std::ifstream file(path_utf8, std::ios::binary);
+  return static_cast<void*>(&file);
+
+  /*
   auto state = std::make_unique<FilereaderState>();
   {
     auto& instance = GetInstance();
@@ -914,58 +944,50 @@ void* AchievementManager::FilereaderOpen(const char* path_utf8)
   if (!state->volume)
     return nullptr;
   return state.release();
+  */
 }
-*/
 
-/*
+
+
 void AchievementManager::FilereaderSeek(void* file_handle, int64_t offset, int origin)
 {
   switch (origin)
   {
   case SEEK_SET:
-    static_cast<FilereaderState*>(file_handle)->position = offset;
+    static_cast<std::ifstream*>(file_handle)->seekg(offset, std::ios_base::beg);
     break;
   case SEEK_CUR:
-    static_cast<FilereaderState*>(file_handle)->position += offset;
+    static_cast<std::ifstream*>(file_handle)->seekg(offset, std::ios_base::cur);
     break;
   case SEEK_END:
     // Unused
     break;
   }
 }
-*/
 
-/*
+
+
 int64_t AchievementManager::FilereaderTell(void* file_handle)
 {
-  return static_cast<FilereaderState*>(file_handle)->position;
+  return static_cast<std::ifstream*>(file_handle)->tellg();
 }
-*/
 
-/*
+
+
 size_t AchievementManager::FilereaderRead(void* file_handle, void* buffer, size_t requested_bytes)
 {
-  FilereaderState* filereader_state = static_cast<FilereaderState*>(file_handle);
-  bool success = (filereader_state->volume->Read(filereader_state->position, requested_bytes,
-                                                 static_cast<u8*>(buffer), DiscIO::PARTITION_NONE));
-  if (success)
-  {
-    filereader_state->position += requested_bytes;
-    return requested_bytes;
-  }
-  else
-  {
-    return 0;
-  }
+  std::ifstream* file = static_cast<std::ifstream*>(file_handle);
+  file->read(static_cast<char*>(buffer), requested_bytes);
+  return file->gcount();
 }
-*/
 
-/*
+
 void AchievementManager::FilereaderClose(void* file_handle)
 {
-  delete static_cast<FilereaderState*>(file_handle);
+  std::ifstream* file = static_cast<std::ifstream*>(file_handle);
+  file->close();
+  //delete static_cast<std::ifstream*>(file_handle);
 }
-*/
 
 /*
 u32 AchievementManager::FindConsoleID(const DiscIO::Platform& platform)
@@ -1115,31 +1137,32 @@ void AchievementManager::LeaderboardEntriesCallback(int result, const char* erro
 }
 */
 
-/*
+
 void AchievementManager::LoadGameCallback(int result, const char* error_message,
                                           rc_client_t* client, void* userdata)
 {
   auto& instance = AchievementManager::GetInstance();
-  instance.m_loading_volume.reset(nullptr);
+  //instance.m_loading_volume.reset(nullptr);
   if (result == RC_API_FAILURE)
   {
-    WARN_LOG_FMT(ACHIEVEMENTS, "Load data request rejected for old Dolphin version.");
-    OSD::AddMessage("RetroAchievements no longer supports this version of Dolphin.",
-                    OSD::Duration::VERY_LONG, OSD::Color::RED);
-    OSD::AddMessage("Please update Dolphin to a newer version.", OSD::Duration::VERY_LONG,
-                    OSD::Color::RED);
+    fprintf(stderr, "Load data request rejected for old xemu version.\n");
+    //OSD::AddMessage("RetroAchievements no longer supports this version of Dolphin.",
+    //                OSD::Duration::VERY_LONG, OSD::Color::RED);
+    //OSD::AddMessage("Please update Dolphin to a newer version.", OSD::Duration::VERY_LONG,
+    //                OSD::Color::RED);
     return;
   }
   if (result == RC_LOGIN_REQUIRED || result == RC_INVALID_CREDENTIALS || result == RC_EXPIRED_TOKEN)
   {
-    WARN_LOG_FMT(ACHIEVEMENTS, "Invalid/expired RetroAchievements API token.");
-    OSD::AddMessage(
-        "You have been logged out from RetroAchievements due to invalid/expired credentials.",
-        OSD::Duration::VERY_LONG, OSD::Color::RED);
-    OSD::AddMessage("Please close the game to log back in before continuing.",
-                    OSD::Duration::VERY_LONG, OSD::Color::RED);
-    Config::SetBaseOrCurrent(Config::RA_API_TOKEN, "");
-    instance.update_event.Trigger(UpdatedItems{.failed_login_code = result});
+    fprintf(stderr, "Invalid/expired RetroAchievements API token.\n");
+    //OSD::AddMessage(
+    //    "You have been logged out from RetroAchievements due to invalid/expired credentials.",
+    //    OSD::Duration::VERY_LONG, OSD::Color::RED);
+    //OSD::AddMessage("Please close the game to log back in before continuing.",
+    //                OSD::Duration::VERY_LONG, OSD::Color::RED);
+    //Config::SetBaseOrCurrent(Config::RA_API_TOKEN, "");
+    g_config.rcheevos.api_token = "no_token";
+    //instance.update_event.Trigger(UpdatedItems{.failed_login_code = result});
     return;
   }
 
@@ -1148,31 +1171,31 @@ void AchievementManager::LoadGameCallback(int result, const char* error_message,
   {
     if (!game)
     {
-      ERROR_LOG_FMT(ACHIEVEMENTS, "Failed to retrieve game information from client.");
-      OSD::AddMessage("Failed to load achievements for this title.", OSD::Duration::VERY_LONG,
-                      OSD::Color::RED);
+      fprintf(stderr, "Failed to retrieve game information from client.\n");
+      //OSD::AddMessage("Failed to load achievements for this title.", OSD::Duration::VERY_LONG,
+      //                OSD::Color::RED);
     }
     else
     {
-      INFO_LOG_FMT(ACHIEVEMENTS, "Loaded data for game ID {}.", game->id);
+      fprintf(stdout, "Loaded data for game ID %u.\n", game->id);
       instance.m_display_welcome_message = true;
     }
   }
   else
   {
-    WARN_LOG_FMT(ACHIEVEMENTS, "Failed to load data for current game.");
-    OSD::AddMessage("Achievements are not supported for this title.", OSD::Duration::VERY_LONG,
-                    OSD::Color::RED);
+    fprintf(stderr, "Failed to load data for current game.\n");
+    //OSD::AddMessage("Achievements are not supported for this title.", OSD::Duration::VERY_LONG,
+    //                OSD::Color::RED);
   }
 
   if (game == nullptr)
     return;
 
-  instance.FetchGameBadges();
-  instance.m_system.store(&Core::System::GetInstance(), std::memory_order_release);
-  instance.update_event.Trigger({.all = true});
+  //instance.FetchGameBadges();
+  //instance.m_system.store(&Core::System::GetInstance(), std::memory_order_release);
+  //instance.update_event.Trigger({.all = true});
   // Set this to a value that will immediately trigger RP
-  instance.m_last_rp_time = std::chrono::steady_clock::now() - std::chrono::minutes{2};
+  //instance.m_last_rp_time = std::chrono::steady_clock::now() - std::chrono::minutes{2};
 
   std::lock_guard lg{instance.GetLock()};
   auto* leaderboard_list =
@@ -1190,13 +1213,13 @@ void AchievementManager::LoadGameCallback(int result, const char* error_message,
   }
   rc_client_destroy_leaderboard_list(leaderboard_list);
 }
-*/
 
-/*
+
+
 void AchievementManager::ChangeMediaCallback(int result, const char* error_message,
                                              rc_client_t* client, void* userdata)
 {
-  AchievementManager::GetInstance().m_loading_volume.reset(nullptr);
+  //AchievementManager::GetInstance().m_loading_volume.reset(nullptr);
   if (result == RC_OK)
   {
     return;
@@ -1204,17 +1227,17 @@ void AchievementManager::ChangeMediaCallback(int result, const char* error_messa
 
   if (result == RC_HARDCORE_DISABLED)
   {
-    WARN_LOG_FMT(ACHIEVEMENTS, "Hardcore disabled. Unrecognized media inserted.");
+    fprintf(stderr, "Hardcore disabled. Unrecognized media inserted.\n");
   }
   else
   {
     if (!error_message)
       error_message = rc_error_str(result);
 
-    ERROR_LOG_FMT(ACHIEVEMENTS, "RetroAchievements media change failed: {}", error_message);
+    fprintf(stderr, "RetroAchievements media change failed: %s", error_message);
   }
 }
-*/
+
 
 /*
 void AchievementManager::DisplayWelcomeMessage()
@@ -1654,10 +1677,10 @@ void AchievementManager::LoadIntegrationCallback(int result, const char* error_m
   switch (result)
   {
   case RC_OK:
-    fprintf(stdout, "RAIntegration.dll found.");
-    //instance.m_dll_found = true;
-    //rc_client_set_allow_background_memory_reads(instance.m_client, 0);
-    //rc_client_raintegration_set_event_handler(instance.m_client, RAIntegrationEventHandler);
+    fprintf(stdout, "RAIntegration.dll found.\n");
+    instance.m_dll_found = true;
+    rc_client_set_allow_background_memory_reads(instance.m_client, 0);
+    rc_client_raintegration_set_event_handler(instance.m_client, RAIntegrationEventHandler);
     //rc_client_raintegration_set_write_memory_function(instance.m_client, MemoryPoker);
     //rc_client_raintegration_set_get_game_name_function(instance.m_client, GameTitleEstimateHandler);
     //instance.dev_menu_update_event.Trigger();

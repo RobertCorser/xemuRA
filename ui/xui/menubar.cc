@@ -31,6 +31,7 @@
 
 #ifdef RC_CLIENT_SUPPORTS_RAINTEGRATION
 #include "AchievementManager.hh"
+#include "rc_client_raintegration.h"
 #endif
 
 extern float g_main_menu_height; // FIXME
@@ -91,7 +92,7 @@ void ProcessKeyboardShortcuts(void)
 
 #ifdef RC_CLIENT_SUPPORTS_RAINTEGRATION
 void* GetWindow(){
-    return ImGui::GetMainViewport()->PlatformHandle;
+    return ImGui::GetMainViewport()->PlatformHandleRaw;
 }
 #endif
 
@@ -245,6 +246,44 @@ void ShowMainMenu()
 #ifdef CONFIG_RENDERDOC
             if (nv2a_dbg_renderdoc_available()) {
                 ImGui::MenuItem("RenderDoc: Capture", NULL, &g_capture_renderdoc_frame);
+            }
+#endif
+            
+#ifdef RC_CLIENT_SUPPORTS_RAINTEGRATION
+            auto* dev_menu = instance.GetDevelopmentMenu();
+            if(dev_menu){
+                for(int i = 0; i < dev_menu->num_items; i++){
+                    
+                    const auto& menu_item = dev_menu->items[i];
+
+                    ImGui::PushID(i);
+
+                    if(menu_item.label == nullptr){
+                        ImGui::Separator();
+                        ImGui::PopID();
+                        continue;
+                    }
+                    
+                    ImGui::BeginDisabled(!menu_item.enabled);
+
+                    if(ImGui::MenuItem(menu_item.label, NULL, menu_item.checked)){
+                        instance.ActivateDevMenuItem(menu_item.id);
+                    };
+
+                    ImGui::EndDisabled();
+                    //std::string label = std::format("{}###RAINTEGRATION_MENU_ITEM_{}", menu_items[i].label, i);//menu_items[i].label + "###RA_INTEGRATION_MENU_ITEM_" + std::to_string(i));
+                
+                    //fprintf(stdout, "%s\n", menu_items[i].label);
+                    //ImGui::MenuItem(std::string("Test" + std::to_string(i)).c_str(), NULL);
+                    //std::string label = std::string(menu_items[i].label + "###RA_INTEGRATION_MENU_ITEM_" + std::to_string(i));
+
+                    //if(ImGui::MenuItem(std::string(label + "###RA_INTEGRATION_MENU_ITEM_" + std::to_string(i)).c_str())){
+                        //instance.ActivateDevMenuItem(menu_items[i].id);
+                    //}
+                
+                    ImGui::PopID();
+                }
+                
             }
 #endif
             ImGui::EndMenu();

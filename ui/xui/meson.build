@@ -24,6 +24,7 @@ xemu_ss.add(files(
 ))
 
 xemu_ss.add(achievements_dep)
+xemu_ss.add(rcheevos_dep)
 
 if host_os == 'windows'
   xemu_ss.add(files('update.cc'))

@@ -1,0 +1,7 @@
+../achievements/AchievementManager.cc:936:30: warning: address of stack memory associated with local variable 'file' returned [-Wreturn-stack-address]
+  936 |   return static_cast<void*>(&file);
+      |                              ^~~~
+../achievements/AchievementManager.cc:1708:9: warning: unused variable 'instance' [-Wunused-variable]
+ 1708 |   auto& instance = AchievementManager::GetInstance();
+      |         ^~~~~~~~
+2 warnings generated.
